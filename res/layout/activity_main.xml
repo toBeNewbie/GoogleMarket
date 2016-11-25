@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:newbie="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.googlemarket.MainActivity" >
+
+    <com.astuetz.PagerSlidingTabStripExtends
+        
+        newbie:pstsTabTextColor="@color/tab_text_normal"
+        newbie:pstsSelectedTabTextColor="@color/tab_text_selected"
+        newbie:pstsTabTextSize="@dimen/tab_text_normal_size"
+        newbie:pstsSelectedTabTextSize="@dimen/tab_text_selected_size"
+        
+        android:id="@+id/psts_tab_slidign_main"
+        android:layout_width="match_parent"
+        android:layout_height="48dip" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>
