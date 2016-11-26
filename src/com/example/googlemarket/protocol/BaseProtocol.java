@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+
 import com.example.googlemarket.application.BaseApplication;
 import com.example.googlemarket.constant.ConstantsValues;
 import com.example.googlemarket.constant.ConstantsValues.Urls;
@@ -31,12 +32,16 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
  */
 public abstract class BaseProtocol<T> {
 
+
 	public T loadDataFromNet(int index) throws Exception {
 
 		T t = getDataFromMemory(index);
 
+		
 		if (t != null) {
-			LogUtils.s("####从内存中获取数据" + getIndexKey() + "." + index);
+			
+				LogUtils.s("####从内存中获取数据" + getIndexKey() + "." + index);
+			
 			return t;
 		}
 
@@ -61,8 +66,21 @@ public abstract class BaseProtocol<T> {
 		BaseApplication mBaseApplication = (BaseApplication) UIUtils
 				.getContext();
 		Map<String, String> mCacheMap = mBaseApplication.getCacheMap();
-		String key = getIndexKey() + "." + index;
-		String jsonDataString = mCacheMap.get(key);
+		
+		/*-----------add begin item界面跳转保持唯一性------------*/
+		Map<String, String> extraParams = getExtraParams();
+		String Key;
+
+		if (extraParams != null) {
+			Key = getIndexKey() + "." + extraParams.get("packageName");
+			
+		}else {
+			
+			Key = getIndexKey() + "." + index;
+		}
+		/*-----------add end------------*/
+		
+		String jsonDataString = mCacheMap.get(Key);
 		return parseJsonDatas(jsonDataString);
 	}
 
@@ -87,6 +105,22 @@ public abstract class BaseProtocol<T> {
 				if (System.currentTimeMillis() - insertTime < ConstantsValues.NATIVIE_DATAS_TIMEOUT) {
 					// 读取有效的缓存数据
 					String cacheJsonStr = mBufferedReader.readLine();
+					
+
+					/*-----------add begin 保存到内存中------------*/
+					Map<String, String> extraParams = getExtraParams();
+					BaseApplication mBaseApplication = (BaseApplication) UIUtils
+							.getContext();
+					Map<String, String> mCacheMap = mBaseApplication.getCacheMap();
+					String key;
+					if (getExtraParams()!=null) {
+						key = getIndexKey()+"."+ extraParams.get("packageName");
+					}else {
+						key = getIndexKey()+"."+index;
+					}
+					mCacheMap.put(key, cacheJsonStr);
+					/*-----------add end------------*/
+					
 					T jsonDatas = parseJsonDatas(cacheJsonStr);
 					return jsonDatas;
 				}
@@ -112,8 +146,19 @@ public abstract class BaseProtocol<T> {
 		// 文件存在哪里
 		String dir = FileUtils.getDir("json");
 
-		// 文件名需要保证索引唯一性
-		String fileName = getIndexKey() + "." + index;
+
+		/*-----------add begin item界面跳转保持唯一性------------*/
+		Map<String, String> extraParams = getExtraParams();
+		String fileName;
+		if (extraParams != null) {
+			fileName = getIndexKey() + "." + extraParams.get("packageName");
+			
+		}else {
+			
+			// 文件名需要保证索引唯一性
+			fileName = getIndexKey() + "." + index;
+		}
+		/*-----------add end------------*/
 
 		File cacheFile = new File(dir, fileName);
 		return cacheFile;
@@ -130,10 +175,25 @@ public abstract class BaseProtocol<T> {
 
 		HttpUtils mHttpUtils = new HttpUtils();
 		String url = Urls.BASE_URL + getIndexKey();
-LogUtils.sf(url);
 		RequestParams params = new RequestParams();
-
-		params.addQueryStringParameter("index", index + "");
+		
+		/*-----------add begin保证listview跳转唯一性------------*/
+		
+		Map<String, String> extraParams = getExtraParams();
+		if (extraParams != null) {
+			for (Map.Entry<String, String> info: extraParams.entrySet()) {
+				String key = info.getKey();//key:packageName
+				String value = info.getValue();
+				
+				params.addQueryStringParameter(key, value);
+			}
+		}else {
+			
+			params.addQueryStringParameter("index", index + "");
+		}
+		/*-----------add end------------*/
+		
+		
 		ResponseStream responseStream = mHttpUtils.sendSync(HttpMethod.GET,
 				url, params);
 
@@ -143,7 +203,13 @@ LogUtils.sf(url);
 		BaseApplication mBaseApplication = (BaseApplication) UIUtils
 				.getContext();
 		Map<String, String> mCacheMap = mBaseApplication.getCacheMap();
-		mCacheMap.put(getIndexKey() + "." + index, jsonDatas);
+		String key;
+		if (getExtraParams()!=null) {
+			key = getIndexKey()+"." +extraParams.get("packageName");
+		}else {
+			key = getIndexKey()+"."+index;
+		}
+		mCacheMap.put(key, jsonDatas);
 		/*-----------add end------------*/
 
 		/*-----------add begin 缓存数据写到文件中------------*/
@@ -164,6 +230,17 @@ LogUtils.sf(url);
 
 		T t = parseJsonDatas(jsonDatas);
 		return t;
+	}
+
+	/**
+	 * @des 获取额外参数
+	 * @des 子类选择性复写此方法，传递额外的参数
+	 * @call 传递额外的数据访问参数
+	 * @return
+	 */
+	protected Map<String, String> getExtraParams() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**

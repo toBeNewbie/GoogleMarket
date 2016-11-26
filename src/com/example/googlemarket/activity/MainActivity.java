@@ -1,4 +1,4 @@
-package com.example.googlemarket;
+package com.example.googlemarket.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.astuetz.PagerSlidingTabStripExtends;
+import com.example.googlemarket.R;
 import com.example.googlemarket.factory.FragmentFactory;
 import com.example.googlemarket.fragment.BaseFragment;
 import com.example.googlemarket.pages.LoadingPage;

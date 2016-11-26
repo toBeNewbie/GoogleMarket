@@ -74,6 +74,7 @@ public abstract class LoadingPage extends FrameLayout {
 		
 		//数据加载成功了，而且成功视图还没有
 		if (mCurrentState==STATE_SUCCESS && mSuccessView==null) {
+			//TODO
 			mSuccessView = initSuccessView();
 			this.addView(mSuccessView);
 		}
@@ -110,6 +111,7 @@ public abstract class LoadingPage extends FrameLayout {
 		public void run() {
 			// 正在开始加载数据
 			//加载数据完成返回一个临死状态
+			//TODO
 			LoadResultState tempState = initData();
 			
 			//赋值临时状态给当前状态
@@ -129,7 +131,7 @@ public abstract class LoadingPage extends FrameLayout {
 	}
 
 	/**
-	 * @des 开始加载数据了,在子线程中执行
+	 * @des 开始加载数据了,在子线程中执行，外界调用了triggerLoader()方法
 	 * @des 必须实现，不知道具体实现，定义为抽象方法，交给子类具体实现
 	 * 
 	 * @call 外界需要触发加载数据时调用此方法
@@ -138,7 +140,7 @@ public abstract class LoadingPage extends FrameLayout {
 	protected abstract LoadResultState initData();
 	
 	/**
-	 * @des 成功创建视图,
+	 * @des 成功创建视图,外界调用了triggerLoader()方法
 	 * @des 必须实现，不知道具体实现，定义为抽象方法，交给子类具体实现
 	 * @call 触发加载数据，数据加载完成后，得到数据加载结果，重新刷新UI,数据加载成功了，而且成功视图还没有
 	 * @return
