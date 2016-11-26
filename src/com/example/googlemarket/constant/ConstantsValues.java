@@ -22,7 +22,7 @@ public interface ConstantsValues {
 	public static final long NATIVIE_DATAS_TIMEOUT = 5*60*1000;
 
 	/**
-	 * 
+	 * http://169.254.253.65:8080/GooglePlayServer/category?index=0
 	 * 网络请求的基本IP地址
 	 */
 	public static final class Urls{

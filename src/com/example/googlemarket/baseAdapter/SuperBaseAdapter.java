@@ -77,7 +77,7 @@ public abstract class SuperBaseAdapter<ITEMBEANTYPE> extends BaseAdapter impleme
 
 			} else {
 				// 普通的listview条目
-				mBaseHolder = getSpecialViewHolder();
+				mBaseHolder = getSpecialViewHolder(position);
 			}
 
 		} else {
@@ -242,10 +242,22 @@ public abstract class SuperBaseAdapter<ITEMBEANTYPE> extends BaseAdapter impleme
 			return VIEW_LOADING_MORE;
 
 		} else {
-
-			return VIEW_NORMRL;
+			return getNormalState(position);
 
 		}
+	}
+
+
+
+	/**
+	 * @des 当listview布局item数目多于两个的时候可复写此方法，加载更多视图类型
+	 * @call 默认返回1，得到普通的viewType
+	 * @param position
+	 * @return
+	 */
+	protected int getNormalState(int position) {
+		// TODO Auto-generated method stub
+		return VIEW_NORMRL;
 	}
 
 	@Override
@@ -257,12 +269,13 @@ public abstract class SuperBaseAdapter<ITEMBEANTYPE> extends BaseAdapter impleme
 	/*-----------add end------------*/
 
 	/**
+	 * @param  
 	 * @des 返回一个baseHolder对象的子类
 	 * @des 必须实现，但不知道具体实现，定义为抽象方法，交给子类去实现
 	 * @call 来到getView()方法内&&convertView==null
 	 * @return
 	 */
-	protected abstract BaseHolder<ITEMBEANTYPE> getSpecialViewHolder();
+	protected abstract BaseHolder<ITEMBEANTYPE> getSpecialViewHolder(int position);
 
 	
 	/*-----------add begin  处理item的点击事件------------*/

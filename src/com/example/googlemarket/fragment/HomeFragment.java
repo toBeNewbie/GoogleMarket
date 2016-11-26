@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment {
 		}
 
 		@Override
-		protected BaseHolder<AppInfo> getSpecialViewHolder() {
+		protected BaseHolder<AppInfo> getSpecialViewHolder(int position) {
 			return new AppItemHolder();
 		}
 

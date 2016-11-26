@@ -69,7 +69,7 @@ public class ProjectFragment extends BaseFragment {
 		}
 
 		@Override
-		protected BaseHolder<ProjectBean> getSpecialViewHolder() {
+		protected BaseHolder<ProjectBean> getSpecialViewHolder(int position) {
 			// TODO Auto-generated method stub
 			return new ProjectHolder();
 		}

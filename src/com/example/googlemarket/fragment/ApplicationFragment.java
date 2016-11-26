@@ -77,7 +77,7 @@ public class ApplicationFragment extends BaseFragment {
 		}
 		
 		@Override
-		protected BaseHolder<AppInfo> getSpecialViewHolder() {
+		protected BaseHolder<AppInfo> getSpecialViewHolder(int position) {
 			// TODO Auto-generated method stub
 			return new AppItemHolder();
 		}
