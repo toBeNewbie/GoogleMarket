@@ -9,6 +9,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.example.googlemarket.factory.ThreadPoolExecutorProxyFactory;
 import com.example.googlemarket.utils.UIUtils;
@@ -19,7 +20,7 @@ public abstract class SuperBaseAdapter<ITEMBEANTYPE> extends BaseAdapter impleme
 
 	private static final int VIEW_LOADING_MORE = 0;
 	private static final int VIEW_NORMRL = 1;
-	private List<ITEMBEANTYPE> mDataResouce = new ArrayList<ITEMBEANTYPE>();
+	protected List<ITEMBEANTYPE> mDataResouce = new ArrayList<ITEMBEANTYPE>();
 	private LoadMoreViewHolder mLoadMoreViewHolder;
 	private LoadMoreTask mLoadMoreTask;
 	private AbsListView mAbsListView;
@@ -282,7 +283,15 @@ public abstract class SuperBaseAdapter<ITEMBEANTYPE> extends BaseAdapter impleme
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-
+		
+		/*-----------add begin 解决listview加入headView后点击错位------------*/
+		
+		if (mAbsListView instanceof ListView) {
+			position = position-((ListView) mAbsListView).getHeaderViewsCount();
+		}
+		/*-----------add end------------*/
+		
+		
 		if (getItemViewType(position) == VIEW_LOADING_MORE) {
 			//重新加载更多数据视图
 			//触发加载更多数据

@@ -10,6 +10,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.googlemarket.baseAdapter.BaseItemAdapter;
 import com.example.googlemarket.baseAdapter.SuperBaseAdapter;
 import com.example.googlemarket.bean.HomeFragmentBean.AppInfo;
 import com.example.googlemarket.factory.ListViewFactory;
@@ -62,20 +63,14 @@ public class GameFragment extends BaseFragment {
 		return mGameListView;
 	}
 	
-	class GameAdapter extends SuperBaseAdapter<AppInfo>{
+	class GameAdapter extends BaseItemAdapter{
 
 		public GameAdapter(AbsListView absListView, List<AppInfo> dataResouce) {
 			super(absListView, dataResouce);
 			// TODO Auto-generated constructor stub
 		}
 
-		@Override
-		protected BaseHolder<AppInfo> getSpecialViewHolder(int position) {
-			// TODO Auto-generated method stub
-			return new AppItemHolder();
-		}
-		
-		
+	
 		@Override
 		protected List<AppInfo> onLoadMore() throws Exception {
 			// TODO Auto-generated method stub

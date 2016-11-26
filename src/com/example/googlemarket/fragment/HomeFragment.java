@@ -6,20 +6,14 @@ import java.util.List;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.googlemarket.baseAdapter.SuperBaseAdapter;
+import com.example.googlemarket.baseAdapter.BaseItemAdapter;
 import com.example.googlemarket.bean.HomeFragmentBean;
 import com.example.googlemarket.bean.HomeFragmentBean.AppInfo;
 import com.example.googlemarket.factory.ListViewFactory;
 import com.example.googlemarket.pages.LoadingPage.LoadResultState;
 import com.example.googlemarket.protocol.HomeFragmentNetProtocol;
-import com.example.googlemarket.utils.LogUtils;
-import com.example.googlemarket.utils.UIUtils;
-import com.example.googlemarket.viewHolder.AppItemHolder;
-import com.example.googlemarket.viewHolder.BaseHolder;
 import com.example.googlemarket.viewHolder.HomePicHolder;
 import com.lidroid.xutils.exception.HttpException;
 
@@ -77,31 +71,15 @@ public class HomeFragment extends BaseFragment {
 			e.printStackTrace();
 			return LoadResultState.ERROR;
 		}
-		
 
 	}
 
-	class HomeFragmentAdapter extends SuperBaseAdapter<AppInfo> {
+	class HomeFragmentAdapter extends BaseItemAdapter {
 
 		public HomeFragmentAdapter(AbsListView absListView,
 				List<AppInfo> dataResouce) {
 			super(absListView, dataResouce);
 			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		protected BaseHolder<AppInfo> getSpecialViewHolder(int position) {
-			return new AppItemHolder();
-		}
-
-		@Override
-		protected void onNormalItemClick(AdapterView<?> parent, View view,
-				int position, long id) {
-			// TODO Auto-generated method stub
-			Toast.makeText(UIUtils.getContext(),
-					mAppInfos.get(position).packageName, 0).show();
-
-			super.onNormalItemClick(parent, view, position, id);
 		}
 
 		@Override
@@ -131,7 +109,7 @@ public class HomeFragment extends BaseFragment {
 				return jsonAppInfos.list;
 			}
 
-			return super.onLoadMore();
+			return null;
 		}
 
 	}
