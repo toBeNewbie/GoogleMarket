@@ -3,19 +3,43 @@ package com.example.googlemarket.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
+import com.example.googlemarket.R;
 import com.example.googlemarket.bean.HomeFragmentBean.AppInfo;
 import com.example.googlemarket.pages.LoadingPage;
 import com.example.googlemarket.pages.LoadingPage.LoadResultState;
 import com.example.googlemarket.protocol.DetailActivityProtocol;
 import com.example.googlemarket.utils.UIUtils;
+import com.example.googlemarket.viewHolder.AppDetailBottomHolder;
+import com.example.googlemarket.viewHolder.AppDetailDesHolder;
+import com.example.googlemarket.viewHolder.AppDetailInfosHolder;
+import com.example.googlemarket.viewHolder.AppDetailPicHolder;
+import com.example.googlemarket.viewHolder.AppDetailSafeHolder;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class DeailAppInfoActivity extends Activity {
 	private String mPackageName;
 	private LoadingPage mLoadingPage;
 	private AppInfo mAppInfos;
 
+	
+	@ViewInject(R.id.detail_fl_bottom)
+	FrameLayout mContinerBottom;
+	
+	@ViewInject(R.id.detail_fl_des)
+	FrameLayout mContinerDes;
+	
+	@ViewInject(R.id.detail_fl_info)
+	FrameLayout mContinerInfos;
+	
+	@ViewInject(R.id.detail_fl_pic)
+	FrameLayout mContinerPic;
+
+	@ViewInject(R.id.detail_fl_safe)
+	FrameLayout mContinerSafe;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -67,9 +91,36 @@ public class DeailAppInfoActivity extends Activity {
 	}
 
 	protected View initSuccessView() {
-		TextView mTextView = new TextView(UIUtils.getContext());
-		mTextView.setText(mAppInfos.toString());
-		return mTextView;
+		View rootView = View.inflate(UIUtils.getContext(), R.layout.item_detail, null);
+		ViewUtils.inject(this, rootView);
+		
+		//应用信息
+		AppDetailInfosHolder mDetailInfosHolder=new AppDetailInfosHolder();
+		mContinerInfos.addView(mDetailInfosHolder.mViewHolder);
+		mDetailInfosHolder.setDataAndRefreshHolderView(mAppInfos);
+		
+		//应用安全
+		AppDetailSafeHolder mSafeHolder=new AppDetailSafeHolder();
+		mContinerSafe.addView(mSafeHolder.mViewHolder);
+		mSafeHolder.setDataAndRefreshHolderView(mAppInfos);
+		
+		//应用描述
+		AppDetailDesHolder mDetailDesHolder=new AppDetailDesHolder();
+		mContinerDes.addView(mDetailDesHolder.mViewHolder);
+		mDetailDesHolder.setDataAndRefreshHolderView(mAppInfos);
+		
+		//应用截图
+		AppDetailPicHolder mDetailPicHolder=new AppDetailPicHolder();
+		mContinerPic.addView(mDetailPicHolder.mViewHolder);
+		mDetailPicHolder.setDataAndRefreshHolderView(mAppInfos);
+		
+		//下载
+		AppDetailBottomHolder mDetailBottomHolder=new AppDetailBottomHolder();
+		mContinerBottom.addView(mDetailBottomHolder.mViewHolder);
+		mDetailBottomHolder.setDataAndRefreshHolderView(mAppInfos);
+		
+		ViewUtils.inject(this, rootView);
+		return rootView;
 	}
 
 	protected LoadResultState loadToData() {

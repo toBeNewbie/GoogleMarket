@@ -36,8 +36,17 @@ public class UIUtils {
 	 * 得到String.xml中的字符
 	 */
 	public static String getString(int resId){
-		
 		return getResources().getString(resId);
+	}
+	
+	/**
+	 * @des 得到string.xml中的字符，带有占位符
+	 * @param id
+	 * @param formatArgs
+	 * @return
+	 */
+	public static String getString(int id, Object... formatArgs){
+		return getResources().getString(id, formatArgs);
 	}
 	
 	/**
