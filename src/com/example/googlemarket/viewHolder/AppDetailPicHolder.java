@@ -2,8 +2,6 @@ package com.example.googlemarket.viewHolder;
 
 import java.util.List;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +19,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class AppDetailPicHolder extends BaseHolder<AppInfo>{
 
-	private TextView mTextView;
 
 	@ViewInject(R.id.app_detail_pic_iv_container)
 	LinearLayout mIvPicContainer;
