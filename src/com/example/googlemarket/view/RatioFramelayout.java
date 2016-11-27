@@ -29,6 +29,14 @@ public class RatioFramelayout extends FrameLayout {
 		relative = mTypedArray.getInt(R.styleable.RatioFramelayout_relative, RELATIVE_WIDTH);
 	}
 
+	public void setRelative(int relative) {
+		this.relative = relative;
+	}
+
+	public void setPicRatio(float picRatio) {
+		mPicRatio = picRatio;
+	}
+
 	public RatioFramelayout(Context context) {
 		this(context,null);
 		// TODO Auto-generated constructor stub
